@@ -1,0 +1,27 @@
+<!-- Local rules -->
+<!-- Modify it at your will. -->
+
+<group name="local,syslog,sshd,">
+  <rule id="100010" level="12" frequency="2" timeframe="600">
+    <if_matched_sid>5712</if_matched_sid>
+    <same_source_ip/>
+    <description>Repeated SSH brute force detections from same source — escalate to Tier 2</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+    <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,</group>
+  </rule>
+</group>
+
+
+<group name="local,audit,">
+  <rule id="100020" level="7">
+    <if_sid>80700</if_sid>
+    <field name="audit.key">shell_config_mod</field>
+    <description>Shell configuration file modified: $(audit.file.name)</description>
+    <mitre>
+      <id>T1546.004</id>
+    </mitre>
+    <group>persistence,local_rules,</group>
+  </rule>
+</group>
