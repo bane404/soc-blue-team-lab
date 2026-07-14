@@ -1,0 +1,157 @@
+#!/bin/bash
+
+# auditread - human-readable auditd output
+# Usage:
+#   auditread [-k key] [-n N] [-x] [-s yes|no] [-u user]
+#
+#   -k key      filter by audit key (e.g. passwd_changes)
+#   -n N        show N events (-n 2 = 2 newest, with -x = 2 oldest)
+#   -x          show oldest first instead of newest
+#   -s yes|no   filter by success (yes=successful, no=failed)
+#   -u user     filter by auid username
+
+if [[ $EUID -ne 0 ]]; then
+    echo "auditread requires sudo"
+    exit 1
+fi
+
+KEY=""
+LIMIT=0
+OLDEST=false
+SUCCESS_FILTER=""
+USER_FILTER=""
+
+# parse flags
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -k) KEY="-k $2"; shift 2 ;;
+        -n) LIMIT="$2"; shift 2 ;;
+        -x) OLDEST=true; shift ;;
+        -s) SUCCESS_FILTER="$2"; shift 2 ;;
+        -u) USER_FILTER="$2"; shift 2 ;;
+        *)  echo "Unknown flag: $1"; exit 1 ;;
+    esac
+done
+
+# build ausearch command
+AUSEARCH="sudo ausearch $KEY --interpret 2>/dev/null"
+
+# ─── parser ───────────────────────────────────────────────────────────────────
+
+parse_events() {
+    local when="" what="" syscall="" uid="" auid="" path="" comm="" exe="" cmd="" cwd="" success=""
+
+    print_event() {
+        [[ -z "$when" ]] && return
+
+        # apply filters
+        [[ -n "$SUCCESS_FILTER" && "$success" != "$SUCCESS_FILTER" ]] && return
+        [[ -n "$USER_FILTER"    && "$auid"    != "$USER_FILTER"    ]] && return
+
+        echo "EVENT_START"
+        echo "[WHEN]    $when"
+        echo "[WHAT]    $what | $syscall | success=$success"
+        echo "[WHO]     uid=$uid | auid=$auid"
+        echo "[WHERE]   ${path:--}"
+        echo "[HOW]     $comm @ $exe"
+        echo "[CMD]     $cmd"
+        echo "[CWD]     ${cwd:--}"
+        echo "EVENT_END"
+    }
+
+    while IFS= read -r line; do
+        if [[ "$line" == "----" ]]; then
+            print_event
+            when=""; what=""; syscall=""; uid=""; auid=""
+            path=""; comm=""; exe=""; cmd=""; cwd=""; success=""
+
+        elif [[ "$line" == *"type=SYSCALL"* ]]; then
+            when=$(echo "$line"    | grep -oP 'msg=audit\(\K[^)]+' | sed 's/\.[0-9]*:[0-9]*//')
+            syscall=$(echo "$line" | grep -oP 'syscall=\K[^ ]+')
+            uid=$(echo "$line"     | grep -oP '\buid=\K[^ ]+' | head -1)
+            auid=$(echo "$line"    | grep -oP 'auid=\K[^ ]+' | head -1)
+            comm=$(echo "$line"    | grep -oP 'comm=\K[^ ]+')
+            exe=$(echo "$line"     | grep -oP 'exe=\K[^ ]+')
+            success=$(echo "$line" | grep -oP 'success=\K[^ ]+')
+            what="syscall"
+
+        elif [[ "$line" == *"type=PATH"* && "$line" == *"nametype=NORMAL"* ]]; then
+            path=$(echo "$line" | grep -oP 'name=\K[^ ]+')
+
+        elif [[ "$line" == *"type=CWD"* ]]; then
+            cwd=$(echo "$line" | grep -oP 'cwd=\K[^ ]+')
+
+        elif [[ "$line" == *"type=PROCTITLE"* ]]; then
+            cmd=$(echo "$line" | grep -oP 'proctitle=\K.*' | sed 's/^[ \t]*//')
+
+        elif [[ "$line" == *"type=CONFIG_CHANGE"* ]]; then
+            what="config-change"
+            syscall=$(echo "$line" | grep -oP 'op=\K[^ ]+')
+            auid=$(echo "$line"    | grep -oP 'auid=\K[^ ]+' | head -1)
+            success=$(echo "$line" | grep -oP 'res=\K[^ ]+')
+            [[ -z "$uid"  ]] && uid="root"
+            [[ -z "$path" ]] && path="auditd config"
+            [[ -z "$comm" ]] && comm="auditctl"
+            [[ -z "$exe"  ]] && exe="/usr/sbin/auditctl"
+            [[ -z "$cwd"  ]] && cwd="-"
+            [[ -z "$cmd"  ]] && cmd="auditctl (config change)"
+        fi
+
+    done < <(eval "$AUSEARCH")
+
+    # print last event (no trailing ----)
+    print_event
+}
+
+# ─── collect, order, limit ────────────────────────────────────────────────────
+
+# collect all events into an array
+mapfile -d '' EVENTS < <(parse_events | awk '
+    /^EVENT_START$/ { block=""; next }
+    /^EVENT_END$/   { printf "%s%c", block, 0; next }
+    { block = block $0 "\n" }
+')
+
+TOTAL=${#EVENTS[@]}
+
+if [[ $TOTAL -eq 0 ]]; then
+    echo "No events found."
+    exit 0
+fi
+
+# determine order and slice
+if $OLDEST; then
+    # oldest first = natural order
+    START=0
+    END=$(( TOTAL - 1 ))
+else
+    # newest first = reverse
+    EVENTS_REV=()
+    for (( i=TOTAL-1; i>=0; i-- )); do
+        EVENTS_REV+=("${EVENTS[$i]}")
+    done
+    EVENTS=("${EVENTS_REV[@]}")
+    START=0
+    END=$(( TOTAL - 1 ))
+fi
+
+# apply limit
+if [[ $LIMIT -gt 0 && $LIMIT -lt $TOTAL ]]; then
+    END=$(( LIMIT - 1 ))
+fi
+
+# ─── print ────────────────────────────────────────────────────────────────────
+
+COUNT=$(( END - START + 1 ))
+echo ""
+echo "  auditread — showing $COUNT of $TOTAL event(s)"
+[[ -n "$KEY"            ]] && echo "  filter: $KEY"
+[[ -n "$SUCCESS_FILTER" ]] && echo "  success: $SUCCESS_FILTER"
+[[ -n "$USER_FILTER"    ]] && echo "  user: $USER_FILTER"
+$OLDEST && echo "  order: oldest first" || echo "  order: newest first"
+echo ""
+
+for (( i=START; i<=END; i++ )); do
+    echo "${EVENTS[$i]}"
+    echo "----------------------------------------"
+done
