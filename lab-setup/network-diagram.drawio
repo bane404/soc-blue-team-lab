@@ -1,0 +1,69 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36">
+  <diagram name="Page-1" id="3vUnwV2AmhSplRhxeydb">
+    <mxGraphModel dx="1212" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-3" edge="1" parent="1" source="ZLVOF9KDMepyzp0yhrNe-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;strokeWidth=3;startArrow=classic;startFill=1;endArrow=none;endFill=0;" target="ZLVOF9KDMepyzp0yhrNe-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="405" y="220" />
+              <mxPoint x="405" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Verdana;fontSize=18;fontStyle=1;labelBorderColor=none;textShadow=0;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Router" vertex="1">
+          <mxGeometry height="90" width="90" x="369" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Verdana;fontSize=18;fontStyle=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="Access&lt;div&gt;Point&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="354" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-5" edge="1" parent="1" source="ZLVOF9KDMepyzp0yhrNe-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;curved=0;" target="ZLVOF9KDMepyzp0yhrNe-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontFamily=Times New Roman;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;fontStyle=1" value="Debian&lt;div&gt;Server&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="70" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-7" edge="1" parent="1" source="ZLVOF9KDMepyzp0yhrNe-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;curved=0;" target="ZLVOF9KDMepyzp0yhrNe-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontFamily=Times New Roman;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;fontStyle=1" value="Windows&lt;div&gt;Agent&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="650" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-9" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value=" Wazuh Manager, Wazuh Indexer, Wazuh Dashboard, Suricata." vertex="1">
+          <mxGeometry height="50" width="140" x="60" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-10" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.1.13" vertex="1">
+          <mxGeometry height="20" width="90" x="85" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-11" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.2.10" vertex="1">
+          <mxGeometry height="20" width="90" x="665" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-12" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.2.1" vertex="1">
+          <mxGeometry height="20" width="90" x="369" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-13" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.1.1" vertex="1">
+          <mxGeometry height="20" width="90" x="369" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-14" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.1.254" vertex="1">
+          <mxGeometry height="20" width="100" x="364" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-17" edge="1" parent="1" source="ZLVOF9KDMepyzp0yhrNe-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;fillColor=#a20025;strokeColor=light-dark(#6F0000,#FF0000);curved=0;" target="ZLVOF9KDMepyzp0yhrNe-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;fontFamily=Times New Roman;fillColor=light-dark(#A20025,#FF6666);fontColor=#ffffff;strokeColor=#6F0000;fontSize=18;dashed=1;dashPattern=8 4 1 4;" value="Kali Linux Live Boot" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-18" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" value="192.168.2.20" vertex="1">
+          <mxGeometry height="20" width="90" x="75" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=light-dark(#FFFFFF,#684BB8);align=center;verticalAlign=middle;rounded=1;fontSize=15;" value="Traffic from Kali (192.168.2.x) is NAT&#39;d by the router — Wazuh/Suricata alerts show source IP 192.168.1.1 instead of the actual attacker IP." vertex="1">
+          <mxGeometry height="80" width="400" x="214" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="ZLVOF9KDMepyzp0yhrNe-22" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=1;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=12;fontStyle=1;align=center;glass=0;sketch=1;curveFitting=1;jiggle=2;shadow=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;SOC Home Lab — Network Topology&lt;/h1&gt;" vertex="1">
+          <mxGeometry height="50" width="430" x="199" y="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
