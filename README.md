@@ -48,9 +48,6 @@ Two rules currently live in `custom-rules/local\_rules.xml`:
 * Trimming Suricata's `eve.json` output — it's verbose enough to occasionally overload the analysis engine under bursty traffic, which was part of the FIM issue above. Raised a decoder limit as a workaround; the more correct fix is reducing what Suricata logs in the first place.
 * More BTLO/CyberDefenders writeups — a few are linked from my [security-writeups](https://github.com/bane404/security-writeups) repo, separate from this one.
 
-## Skills
-
-Self-assessment of where I actually am: [skills-checklist.md](skills-checklist.md)
 
 ## Contact
 
