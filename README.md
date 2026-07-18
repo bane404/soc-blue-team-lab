@@ -4,9 +4,12 @@ A self-built SOC/blue team lab I put together to get real hands-on experience be
 
 I'm a cybersecurity engineering student at ENSA Tétouan, aiming for entry-level SOC/blue team roles. This lab (and the writeups in it) is how I taught myself the actual day-to-day of the job instead of just reading about it.
 
+📄 **[Full report (PDF)](docs/SOC-Home-Lab-Report.pdf)** — the complete writeup with timelines, MITRE mappings, and rule XML.
+
 ## What's actually in here
 
 Everything below is real — real config, real alerts, real bugs I hit and had to debug. Where something didn't work the way it was supposed to, I wrote that up too instead of only showing the clean parts. I think that's more useful to read than a portfolio that pretends nothing ever broke.
+
 
 ## Architecture
 
